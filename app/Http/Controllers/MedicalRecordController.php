@@ -8,6 +8,7 @@ use App\Models\Doctor;
 use App\Models\DiseaseCategory;
 use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MedicalRecordController extends Controller
 {
@@ -199,25 +200,100 @@ class MedicalRecordController extends Controller
             'other_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        $ekgFile = $request->file('ekg_file')
-            ? $request->file('ekg_file')->store('supporting_exam', 'public')
-            : $record->ekg_file;
+        // EKG
+        if ($request->hasFile('ekg_file')) {
 
-        $radiologyFile = $request->file('radiology_file')
-            ? $request->file('radiology_file')->store('supporting_exam', 'public')
-            : $record->radiology_file;
+            if ($record->ekg_file &&
+                Storage::disk('public')->exists($record->ekg_file)) {
 
-        $labFile = $request->file('lab_file')
-            ? $request->file('lab_file')->store('supporting_exam', 'public')
-            : $record->lab_file;
+                Storage::disk('public')->delete($record->ekg_file);
 
-        $usgFile = $request->file('usg_file')
-            ? $request->file('usg_file')->store('supporting_exam', 'public')
-            : $record->usg_file;
+            }
 
-        $otherFile = $request->file('other_file')
-            ? $request->file('other_file')->store('supporting_exam', 'public')
-            : $record->other_file;
+            $ekgFile = $request->file('ekg_file')
+                ->store('supporting_exam', 'public');
+
+        } else {
+
+            $ekgFile = $record->ekg_file;
+
+        }
+
+        // RADIOLOGY
+        if ($request->hasFile('radiology_file')) {
+
+            if ($record->radiology_file &&
+                Storage::disk('public')->exists($record->radiology_file)) {
+
+                Storage::disk('public')->delete($record->radiology_file);
+
+            }
+
+            $radiologyFile = $request->file('radiology_file')
+                ->store('supporting_exam', 'public');
+
+        } else {
+
+            $radiologyFile = $record->radiology_file;
+
+        }
+
+        // LAB
+        if ($request->hasFile('lab_file')) {
+
+            if ($record->lab_file &&
+                Storage::disk('public')->exists($record->lab_file)) {
+
+                Storage::disk('public')->delete($record->lab_file);
+
+            }
+
+            $labFile = $request->file('lab_file')
+                ->store('supporting_exam', 'public');
+
+        } else {
+
+            $labFile = $record->lab_file;
+
+        }
+
+        // USG
+        if ($request->hasFile('usg_file')) {
+
+            if ($record->usg_file &&
+                Storage::disk('public')->exists($record->usg_file)) {
+
+                Storage::disk('public')->delete($record->usg_file);
+
+            }
+
+            $usgFile = $request->file('usg_file')
+                ->store('supporting_exam', 'public');
+
+        } else {
+
+            $usgFile = $record->usg_file;
+
+        }
+
+        // OTHER
+        if ($request->hasFile('other_file')) {
+
+            if ($record->other_file &&
+                Storage::disk('public')->exists($record->other_file)) {
+
+                Storage::disk('public')->delete($record->other_file);
+
+            }
+
+            $otherFile = $request->file('other_file')
+                ->store('supporting_exam', 'public');
+
+        } else {
+
+            $otherFile = $record->other_file;
+
+        }
 
         $record->update([
             'tanggal_periksa' => $request->tanggal_periksa,
@@ -272,5 +348,39 @@ class MedicalRecordController extends Controller
 
         return redirect()->route('patients.show', $record->patient_id)
             ->with('success', 'Rekam medis berhasil diupdate');
+    }
+
+    public function destroy(MedicalRecord $record)
+    {
+        logActivity(
+            'delete',
+            'rekam medis',
+            'Menghapus rekam medis pasien ' . $record->patient->name
+        );
+
+        // HAPUS FILE PENUNJANG
+        $files = [
+            $record->ekg_file,
+            $record->radiology_file,
+            $record->lab_file,
+            $record->usg_file,
+            $record->other_file,
+        ];
+
+        foreach ($files as $file) {
+
+            if ($file && Storage::disk('public')->exists($file)) {
+
+                Storage::disk('public')->delete($file);
+
+            }
+
+        }
+
+        $record->delete();
+
+        return redirect()
+            ->route('patients.show', $record->patient_id)
+            ->with('success', 'Rekam medis berhasil dihapus');
     }
 }

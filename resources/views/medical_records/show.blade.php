@@ -134,7 +134,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
 
-        <div>
+        <!-- <div>
             Konjungtiva:
             <b>
                 {{ is_null($record->conjunctiva_anemic) ? '-' : ($record->conjunctiva_anemic ? 'Anemis' : 'Ananemis') }}
@@ -165,13 +165,13 @@
         </div>
 
         <div>
-            Rhonchi:
-            <b>{{ is_null($record->rhonchi) ? '-' : ($record->rhonchi ? 'Positif' : 'Negatif') }}</b>
-        </div>
+            Telinga:
+            <b>{{ $record->rhonchi ?? '-' }}</b>
+        </div> -->
 
         <div>
-            Wheezing:
-            <b>{{ is_null($record->wheezing) ? '-' : ($record->wheezing ? 'Positif' : 'Negatif') }}</b>
+            Kepala:
+            <b>{{ $record->rhonchi ?? '-' }}</b>
         </div>
 
         <div>
@@ -204,10 +204,6 @@
             <b>{{ $record->skin ?? '-' }}</b>
         </div>
 
-        <div>
-            Muscle Strength:
-            <b>{{ $record->muscle_strength ?? '-' }}</b>
-        </div>
 
     </div>
 
@@ -270,11 +266,15 @@
     </div>
 
     <!-- ACTION -->
-    <div>
+    <div class="flex items-center justify-between">
+
         <a href="{{ route('patients.show', $record->patient_id) }}"
-           class="text-sm text-gray-500 hover:underline">
+            class="text-sm text-gray-500 hover:underline">
+
             ← Kembali
+
         </a>
+
     </div>
 
 </div>

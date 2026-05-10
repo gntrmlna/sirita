@@ -113,14 +113,14 @@
         Pemeriksaan Fisik
     </h1>
 
-    <h2 class="text-sm font-semibold text-gray-700 uppercase">
+    <!-- <h2 class="text-sm font-semibold text-gray-700 uppercase">
         Kepala
     </h2>
 
-    <!-- KEPALA -->
+    
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border rounded-lg p-4">
 
-        <!-- KONJUNGTIVA -->
+        
         <div>
             <label class="text-sm text-gray-600">Konjungtiva</label>
 
@@ -142,7 +142,7 @@
             </select>
         </div>
 
-        <!-- SKLERA -->
+        
         <div>
             <label class="text-sm text-gray-600">Sklera</label>
 
@@ -164,7 +164,7 @@
             </select>
         </div>
 
-        <!-- PUPIL -->
+        
         <div>
 
             <label class="text-sm text-gray-600">
@@ -192,7 +192,7 @@
 
         </div>
 
-        <!-- DIAMETER -->
+        
         <div id="diameter-wrapper"
             style="{{ old('pupil_type', $record->pupil_type ?? '') ? '' : 'display:none;' }}">
 
@@ -209,7 +209,7 @@
 
         </div>
 
-        <!-- RAMBUT -->
+        
         <div>
             <label class="text-sm text-gray-600">Rambut</label>
 
@@ -220,7 +220,7 @@
                 class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
         </div>
 
-        <!-- Telinga -->
+       
         <div>
             <label class="text-sm text-gray-600">Telinga</label>
 
@@ -232,10 +232,18 @@
         </div>
 
 
-    </div>
+    </div> -->
 
     <!-- PEMERIKSAAN LANJUT -->
     <div class="grid grid-cols-1 gap-4 mt-4">
+
+        <div>
+            <label class="text-sm text-gray-600">Kepala</label>
+
+            <textarea name="rhonchi"
+                rows="2"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">{{ old('rhonchi', $record->rhonchi ?? '') }}</textarea>
+        </div>
 
         <div>
             <label class="text-sm text-gray-600">Leher</label>

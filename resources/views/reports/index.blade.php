@@ -73,14 +73,14 @@
 
                         <input type="text" name="anggota_nama[]"
                             placeholder="Nama"
-                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
+                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]" required>
 
-                        <input type="text" name="anggota_jabatan[]"
+                        <!-- <input type="text" name="anggota_jabatan[]"
                             placeholder="Jabatan"
-                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
+                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]"> -->
 
                         <select name="anggota_identity_type[]"
-                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
+                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]" required>
 
                             <option value="NIP">NIP</option>
                             <option value="NRP">NRP</option>
@@ -89,7 +89,7 @@
 
                         <input type="text" name="anggota_identity_number[]"
                             placeholder="Nomor"
-                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
+                            class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]" required>
 
                         <button type="button" onclick="removeAnggota(this)"
                             class="text-red-500 hover:text-red-600 text-sm">

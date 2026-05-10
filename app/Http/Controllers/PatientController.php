@@ -54,10 +54,60 @@ class PatientController extends Controller
         return redirect()->route('patients.index');
     }
 
+    public function edit(Patient $patient)
+    {
+        return view('patients.edit', compact('patient'));
+    }
+
+    public function update(Request $request, Patient $patient)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nik' => 'nullable|string|max:255',
+            'gender' => 'required',
+            'birth_place' => 'nullable|string|max:255',
+            'birth_date' => 'required|date',
+            'religion' => 'nullable|string|max:255',
+            'education' => 'nullable|string|max:255',
+            'job' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:1000',
+            'phone' => 'nullable|string|max:255',
+        ]);
+
+        $patient->update($request->all());
+
+        logActivity(
+            'update',
+            'pasien',
+            'Mengupdate pasien ' . $patient->name
+        );
+
+        return redirect()
+            ->route('patients.show', $patient->id)
+            ->with('success', 'Data pasien berhasil diupdate');
+    }
+
     public function show($id)
     {
         $patient = \App\Models\Patient::with('medicalRecords.doctor')->findOrFail($id);
 
         return view('patients.show', compact('patient'));
+    }
+
+    public function destroy(Patient $patient)
+    {
+        logActivity(
+            'delete',
+            'pasien',
+            'Menghapus pasien ' . $patient->name
+        );
+
+        $patient->medicalRecords()->delete();
+
+        $patient->delete();
+
+        return redirect()
+            ->route('patients.index')
+            ->with('success', 'Pasien berhasil dihapus');
     }
 }

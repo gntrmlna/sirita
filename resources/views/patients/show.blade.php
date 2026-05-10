@@ -122,17 +122,46 @@
                     <td class="px-4 py-3">
                         <div class="flex justify-center gap-3">
 
-                            <a href="{{ route('medical-records.show', $record->id) }}"
-                               class="text-blue-600 hover:text-blue-700">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                            </a>
+                        <!-- DETAIL -->
+                        <a href="{{ route('medical-records.show', $record->id) }}"
+                            class="text-blue-600 hover:text-blue-700">
 
-                            <a href="{{ route('medical-records.edit', $record->id) }}"
-                               class="text-yellow-600 hover:text-yellow-700">
-                                <i data-lucide="pencil" class="w-4 h-4"></i>
-                            </a>
+                            <i data-lucide="eye" class="w-4 h-4"></i>
 
-                        </div>
+                        </a>
+
+                        <!-- EDIT -->
+                        <a href="{{ route('medical-records.edit', $record->id) }}"
+                            class="text-yellow-600 hover:text-yellow-700">
+
+                            <i data-lucide="pencil" class="w-4 h-4"></i>
+
+                        </a>
+
+                        <!-- DELETE -->
+                        @if(auth()->user()->role === 'super_user')
+
+                        <form
+                            action="{{ route('medical-records.destroy', $record->id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Hapus rekam medis ini?')">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="text-red-600 hover:text-red-700">
+
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+
+                            </button>
+
+                        </form>
+
+                        @endif
+
+                    </div>
                     </td>
 
                 </tr>

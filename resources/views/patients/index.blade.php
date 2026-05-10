@@ -63,12 +63,46 @@
                     </td>
 
                     <td class="px-4 py-3">
-                        <div class="flex justify-center">
+                        <div class="flex justify-center items-center gap-3">
 
+                            <!-- DETAIL -->
                             <a href="{{ route('patients.show', $patient->id) }}"
-                               class="text-blue-600 hover:text-blue-700">
+                                class="text-blue-600 hover:text-blue-700">
+
                                 <i data-lucide="eye" class="w-4 h-4"></i>
+
                             </a>
+
+                            <!-- EDIT -->
+                            <a href="{{ route('patients.edit', $patient->id) }}"
+                                class="text-yellow-600 hover:text-yellow-700">
+
+                                <i data-lucide="pencil" class="w-4 h-4"></i>
+
+                            </a>
+
+                            <!-- DELETE -->
+                            @if(auth()->user()->role === 'super_user')
+
+                            <form
+                                action="{{ route('patients.destroy', $patient->id) }}"
+                                method="POST"
+                                onsubmit="return confirm('Hapus pasien ini beserta seluruh rekam medisnya?')">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+                                    class="text-red-600 hover:text-red-700">
+
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+
+                                </button>
+
+                            </form>
+
+                            @endif
 
                         </div>
                     </td>

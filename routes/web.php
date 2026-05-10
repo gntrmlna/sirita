@@ -71,6 +71,16 @@ Route::middleware('auth')->group(function () {
         [MedicalRecordController::class, 'update']
     )->name('medical-records.update');
 
+    Route::delete('/patients/{patient}',
+        [PatientController::class, 'destroy']
+    )->middleware('role:super_user')
+    ->name('patients.destroy');
+
+    Route::delete('/medical-records/{record}',
+        [MedicalRecordController::class, 'destroy']
+    )->middleware('role:super_user')
+    ->name('medical-records.destroy');
+
     Route::get('/dashboard', function (Request $request) {
 
         $month = $request->month;
