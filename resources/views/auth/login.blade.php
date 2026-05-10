@@ -56,8 +56,26 @@
                 <!-- PASSWORD -->
                 <div>
                     <label class="text-sm text-gray-600">Password</label>
-                    <input type="password" name="password"
-                        class="w-full mt-1 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1F7A4D]">
+                
+                    <div class="mt-1 flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#1F7A4D]">
+                
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="w-full px-3 py-2 border-0 focus:ring-0 focus:outline-none">
+                
+                        <button
+                            type="button"
+                            onclick="togglePassword()"
+                            class="px-3 text-gray-500 hover:text-gray-700">
+                
+                            👁
+                
+                        </button>
+                
+                    </div>
+                
                     <x-input-error :messages="$errors->get('password')" class="mt-1 text-xs" />
                 </div>
 
@@ -107,6 +125,19 @@
     </div>
 
 </div>
+<script>
 
+function togglePassword() {
+
+    const password = document.getElementById('password');
+
+    password.type =
+        password.type === 'password'
+            ? 'text'
+            : 'password';
+
+}
+
+</script>
 </body>
 </html>
