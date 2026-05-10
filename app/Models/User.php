@@ -10,6 +10,15 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public function medicalRecords()
+    {
+        return $this->hasMany(MedicalRecord::class, 'created_by');
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -21,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
