@@ -24,7 +24,13 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::check()) {
+
+        return redirect()->route('dashboard');
+
+    }
+
+    return redirect()->route('login');
 });
 
 Route::middleware(['auth', 'role:super_user'])->group(function () {

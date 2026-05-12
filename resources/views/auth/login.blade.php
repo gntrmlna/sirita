@@ -17,7 +17,7 @@
         <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-sm border">
 
             <!-- LOGO -->
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center justify-center gap-2 mb-6">
 
                 <!-- LOGO KIRI -->
                 <img src="{{ asset('images/polda.webp') }}" class="w-16 h-16">
@@ -116,7 +116,7 @@
             </h2>
 
             <p class="text-sm text-gray-300">
-                <b>SISTEM INFORMASI REKAM MEDIS TERINTEGRASI</b> <br>
+                <b>SISTEM INFORMASI RIKKES TAHANAN</b> <br>
                 Untuk mendukung pelayanan kesehatan yang cepat, akurat, dan efisien.
             </p>
 

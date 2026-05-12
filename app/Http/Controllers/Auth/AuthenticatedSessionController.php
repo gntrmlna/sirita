@@ -17,6 +17,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        if (Auth::check()) {
+
+        return redirect()->route('dashboard');
+
+        }
+
         return view('auth.login');
     }
 
@@ -28,8 +34,6 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        Auth::logoutOtherDevices($request->password);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

@@ -23,6 +23,15 @@ class DoctorController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+
+            'email' => 'required|email|unique:users,email',
+
+            'password' => 'required|min:8',
+        ], [
+            'email.unique' => 'Email sudah digunakan.',
+        ]);
         // 1. buat user login
         $user = User::create([
             'name' => $request->name,
@@ -50,6 +59,15 @@ class DoctorController extends Controller
 
     public function update(Request $request, Doctor $doctor)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+
+            'email' => 'required|email|unique:users,email,' . $doctor->user->id,
+
+            'password' => 'nullable|min:8',
+        ], [
+            'email.unique' => 'Email sudah digunakan.',
+        ]);
         // update user
         $doctor->user->update([
             'name' => $request->name,
@@ -73,7 +91,11 @@ class DoctorController extends Controller
     {
         $name = $doctor->user->name;
 
-        $doctor->delete();
+        if ($doctor->user) {
+
+            $doctor->user->delete();
+
+        }
 
         logActivity(
             'delete',
